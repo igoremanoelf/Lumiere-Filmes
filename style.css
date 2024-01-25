@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2B2B2B;
+    --secondary-color: #DB4A2B;
+}
+
+body {
+    background-color: var(--primary-color);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+header {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    background-color: var(--secondary-color);
+}
+
+.search {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    color: #fff;
+    font-family: inherit;
+}
+
+.search:focus {
+    outline: 0;
+    background-color: var(--primary-color);
+}
+
+.search::placeholder {
+    color: #ffffff;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.movie {
+    width: 300px;
+    margin: 1rem;
+    border-radius: 3px;
+    box-shadow: 0.2px 4px 5px rgba(0, 0, 0, 0.1);
+    background-color: var(--secondary-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.movie img {
+    width: 100%;
+}
+
+.movie-info {
+    color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem 1rem;
+    letter-spacing: 0.5px;
+}
+
+.movie-info h3 {
+    margin-top: 0;
+}
+
+.movie-info span {
+    background-color: var(--primary-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.movie-info span.green {
+    color: lightgreen;
+}
+
+.movie-info span.orange {
+    color: orange;
+}
+
+.movie-info span.red {
+    color: red;
+}
+
+.overview {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    padding: 1rem;
+    max-height: 100%;
+    transform: translateY(101%);
+    transition: transform 0.3s ease-in;
+}
+
+.movie:hover .overview {
+    transform: translateY(0);
+}
+
+#tags {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+}
+
+.tag {
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    background-color: #E4E2DD;
+    border-radius: 50px;
+    margin: 5px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tag.highlight {
+    background-color: #2B2B2B;
+}
+
+.no-results {
+    color: white;
+}
+
+.pagination {
+    display: flex;
+    margin: 10px 30px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.page {
+    padding: 20px;
+    cursor: pointer;
+}
+
+.page.disabled {
+    cursor: not-allowed;
+    color: grey;
+}
+
+.current {
+    padding: 10px 20px;
+    border-radius: 50%;
+    border: 5px solid #DB4A2B;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.know-more {
+    background-color: #DB4A2B;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: 0;
+    border-radius: 50px;
+    padding: 10px 20px;
+    margin-top: 5px;
+}
+
+/* A sobreposição (fundo) */
+.overlay {
+    /* A altura e a largura dependem de como você quer revelar a sobreposição (veja o JS abaixo) */
+    height: 100%;
+    width: 0;
+    position: fixed; /* Ficar no lugar */
+    z-index: 1; /* Ficar no topo */
+    left: 0;
+    top: 0;
+    background-color: rgb(0, 0, 0); /* Cor de fundo preto */
+    background-color: rgba(0, 0, 0, 0.9); /* Preto com opacidade */
+    overflow-x: hidden; /* Desativar rolagem horizontal */
+    transition: 0.5s; /* Efeito de transição de 0,5 segundos para deslizar para dentro ou para baixo a sobreposição (altura ou largura, dependendo do revelar) */
+}
+
+/* Posicionar o conteúdo dentro da sobreposição */
+.overlay-content {
+    position: relative;
+    top: 10%; /* 25% do topo */
+    width: 100%; /* Largura de 100% */
+    text-align: center; /* Texto/link centralizado */
+    margin-top: 30px; /* Margem superior de 30px para evitar conflito com o botão de fechar em telas menores */
+}
+
+/* Os links de navegação dentro da sobreposição */
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block; /* Mostrar como bloco em vez de linha */
+    transition: 0.3s; /* Efeitos de transição no hover (cor) */
+}
+
+/* Quando você passar o mouse sobre os links de navegação, mude sua cor */
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+/* Posicionar o botão de fechar (canto superior direito) */
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+/* Quando a altura da tela for inferior a 450 pixels, altere o tamanho da fonte dos links e posicione novamente o botão de fechar, para que eles não se sobreponham */
+@media screen and (max-height: 450px) {
+    .overlay a {
+        font-size: 20px;
+    }
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
+
+.embed.hide {
+    display: none;
+}
+
+.embed.show {
+    display: inline-block;
+}
+
+.arrow {
+    position: absolute;
+    font-size: 40px;
+}
+
+.arrow.left-arrow {
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+}
+
+.arrow.right-arrow {
+    top: 50%;
+    transform: translateY(-50%);
+    right: 5%;
+}
+
+.dots {
+    margin-top: 30px;
+}
+
+.dots .dot {
+    padding: 5px 15px;
+    border-radius: 50%;
+    border: 5px solid var(--secondary-color);
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 5px;
+}
+
+.dots .dot.active {
+    border-color: #DB4A2B;
+}
+header h1 {
+    margin-right: auto; /* Empurra o título para a esquerda */
+    color: white; /* Cor do texto */
+    font-size: 24px; /* Tamanho da fonte */
+}
+
+.search {
+    flex-grow: 1; /* Ocupa todo o espaço disponível */
+}
